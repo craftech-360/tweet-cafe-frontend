@@ -20,7 +20,9 @@
     "@angular/router": "^16.0.0",
     "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
+    "letter-count": "^5.2.1",
     "ngx-socket-io": "^4.5.1",
+    "rx-queue": "^1.0.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

@@ -1,14 +1,9 @@
-import { Component } from '@angular/core';
-// import { Socket } from 'ngx-socket-io';
-import { interval } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Component, HostListener, signal } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+import { RxQueue } from 'rx-queue';
+import { DelayQueue } from 'rx-queue';
+import { count } from 'letter-count';
 
-interface User {
-  name: string;
-  img: string;
-  text: string;
-  bg:string;
-}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,95 +11,70 @@ interface User {
 })
 export class AppComponent {
   title = 'tweet-frontend';
-  count = 0;
-  colorbg:any = ['#EC1E24','#F05254','#FFCB04','#27AA2C','#5AC5C7']
-  previousJson:any= [
-  ];
+  previousJson=[]
+  list = [];
+  selectedTweet:any = signal({})
+  key:any = ''
+  a:boolean = true;
 
-  newUsers:any
-
-  currentJson: User[] = [
-    { name: "USER1", img: "bob.jpg", text: "Sed do eiusmod tempor incididunt", bg: "" },
-    { name: "USER2", img: "bob.jpg", text: "Sed do eiusmod tempor incididunt", bg: "" },
-    { name: "USER3", img: "bob.jpg", text: "Sed do eiusmod tempor incididunt", bg: "" },
-    { name: "USER4", img: "bob.jpg", text: "Sed do eiusmod tempor incididunt", bg: "" }
-  ];
-  delayTime = 10000; // 10 seconds
-  user: any;
-  
-  delay(ms: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      interval(ms)
-        .pipe(take(1))
-        .subscribe(() => {
-          resolve();
-        });
-    });
-  }
-  // constructor(private socket : Socket) { }
-  ngOnInit(): void {
-    this.iterateAndDelay();
-  }
-  
-  async iterateAndDelay(): Promise<void> {
-    for (this.user of this.currentJson) {
-      this.user.bg = this.colorbg[Math.floor(Math.random() * this.colorbg.length)];
-      console.log('wait');
-      
-      await this.delay(this.delayTime);
-      let data = [{
-        name:this.user.name,
-        text:this.user.text,
-        bg:this.user.bg,
-      }]
-      this.previousJson.push(data)
-      this.user.name = "";
-      this.user.bg = "";
-      this.user.text = "";
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    this.key = event.key;
+    if(this.key == 'n'){
+    // this.selectedTweet = this.list.shift();
+    this.socket.emit('getTweets');
     }
   }
-
   
-}
+  constructor(private socket : Socket) { }
 
+  ngOnInit(): void {
 
-// console.log("Current Users",this.previousJson.length);
-// // // Assuming currentJson is already defined
-// // const currentJson: User[] = [
-// //   { name: "Bob", img: "bob.jpg", text: "Sed do eiusmod tempor incididunt" }
-
-// // ];
-
-// // // Compare the two JSON objects
-// // this.newUsers = currentJson.filter(user => !this.isUserExisting(user));
-
-// // // Push new users to previousJson
-// // this.previousJson.push(...this.newUsers);
-
-// // // Display the new users
-// // // console.log(this.newUsers);
-// // console.log("updatedone",this.previousJson); // Updated previousJson with new users
-// }
-
-// getNewUser(){
-// this.count++
-//     // Assuming currentJson is already defined
-//     const currentJson: User[] = [
-//       { name:`USER${this.count}` , img: "bob.jpg", text: "Sed do eiusmod tempor incididunt",bg: (this.colorbg[Math.floor(Math.random()*this.colorbg.length)]) }
-  
-//     ];
-
-//     // Compare the two JSON objects
-//     this.newUsers = currentJson.filter(user => !this.isUserExisting(user));
+    const delay = new DelayQueue(15000)
     
-//     // Push new users to previousJson
-//     this.previousJson.push(...this.newUsers);
+    // set delay period time to 500 milliseconds
+    delay.subscribe((x:any)=>{
+      var i = this.list.indexOf(x);
+      this.list.splice(i,1);
+      this.selectedTweet.set(x);
 
-//     // Display the new users
-//     // console.log(this.newUsers);
-//     console.log("Updated Users",this.previousJson.length); // Updated previousJson with new users
-// }
+      if(count(x.text)['chars']<60){
+        console.log('less');
+        this.socket.emit("invalid")
+      }
+      else{
+        this.socket.emit("sendCommand")
+      }
+      
+    });
+    
+    this.socket.on("tweets",(e:any)=>{
+       console.log(e);
+      this.list=e;
+      let tmp= [...this.list];
+      console.log(tmp);
+      tmp.forEach(x=>{
+        delay.next(x);   
+      });
 
-// isUserExisting(user: User): boolean {
-// return this.previousJson.some(prevUser => prevUser.name === user.name );
-// }
+      //this.list.pop();
+      
+      // this.list = e
+      // if(e){
+        // this.list.push(e);
+      //   console.log(this.list);
+        
+      //   if(this.a){
+      //     this.selectedTweet =  this.list.shift();
+      //     console.log(this.selectedTweet,"main");
+          
+      //     this.socket.emit('sendCommand');
+      //     this.a = false;
+      //   }
+      // }
+    })
+    
+
+  }
+
+}

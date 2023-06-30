@@ -1,6 +1,6 @@
 <!-- <h1>Hello World</h1>
 <button (click)="getNewUser()">GET NEW UER</button>
-<div  style="width: 100vw; height: 100vh;overflow: scroll; display: grid;
+<d<div  style="width: 100vw; height: 100vh;overflow: scroll; display: grid;
 grid-template-columns: repeat(3, 370px);
 grid-template-rows: repeat(3, 170px);margin-top: 50px;">
 <div  *ngFor="let item of previousJson" >
@@ -38,56 +38,53 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
       <div class="w-full">
 
           <!-- card 1 -->
-          <div class="w-[623px] h-[267px] shadow-2xl  rounded-2xl my-[30px] p-[30px]" [ngStyle]="{'background-color': user.bg}" >
+          <div class="w-[623px] h-[267px] shadow-2xl  rounded-2xl my-[30px] p-[30px] bg-white" >
               <div className="w-full">
                   <div class="flex flex-row justify-between">
                       <div class="">
                           <div class="flex flex-row gap-[11px]">
                               <div class="w-[50px] h-[50px]">
-                                  <img class="rounded-full" src="../assets/images/twitter.jpg" alt="">
+                                  <img class="rounded-full" src={{selectedTweet().image}} alt="">
                               </div>
                               <div class="">
-                                  <p class="text-[15px] font-semibold">{{user.name}}</p>
-                                  <p class="text-[13px] text-zinc-500"></p>
+                                  <p class="text-[15px] font-semibold"> {{selectedTweet().userName}}</p>
+                                  <p class="text-[13px] text-zinc-500">{{selectedTweet().text}}</p>
                               </div>
                           </div>
 
                       </div>
                       <div class="w-[32px] h-[27px]">
-                          <img src="/img/twitter.svg" alt="">
+                          <!-- <img src="/img/twitter.svg" alt=""> -->
                       </div>
                   </div>
                   <div class="pt-[33px]">
-                      <p class="text-[21px] font-medium text-zinc-700">{{user.text}}</p>
+                      <p class="text-[21px] font-medium text-zinc-700"></p>
                   </div>
               </div>
           </div>
 
           <!-- card 2 -->
-          <div class="w-full h-[55vh] grid grid-cols-3  overflow-scroll scroll-smooth " id="main">
+          <div class="w-full  grid grid-cols-3  overflow-scroll scroll-smooth " id="main">
               <!-- card2 -->
-              <div class="w-[425px] h-fit rounded-xl  my-[16px] p-[16px] bg-white" *ngFor="let item of previousJson" [ngStyle]="{'background-color': item.bg}" >
+              <!-- {{list | json}} -->
+              <div class="w-[425px] h-fit rounded-xl  my-[16px] p-[16px] bg-white"  *ngFor="let item of list; index as i " >
                   <div class="flex flex-row justify-between">
                       <div class="">
                           <div class="flex flex-row gap-[11px]">
                               <div class="w-[50px] h-[47px]">
-                                  <img class="rounded-full" src="../assets/images/twitter.jpg" alt="">
+                                  <img class="rounded-full" src={{item.image}} alt="">
                               </div>
                               <div class="">
-                                  <p class="text-[15px] font-semibold">{{item.name}}</p>
-                                  <p class="text-[13px] text-zinc-500">{{item.text}}</p>
-                              </div>
+                                  <p class="text-[15px] font-semibold">{{item.userName}}</p>
                           </div>
-
                       </div>
                       <div class="w-[24px] h-[19px]">
-                          <img class="w-full" src="/img/twitter.svg" alt="">
+                          <img class="w-full" src="../assets/images/twitter.jpg" alt="">
                       </div>
                   </div>
                   <div class="pt-[23px]">
-                      <p class="text-[18px] font-medium text-zinc-700">{{user.text}}</p>
+                      <p class="text-[18px] font-medium text-zinc-700">{{item.text}}</p>
                   </div>
-
               </div>
           </div>
       </div>
@@ -95,6 +92,6 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
 
   </div>
 </div>
-<!-- <app-tweet></app-tweet> -->
-<router-outlet></router-outlet>
+<!-- - <app-tweet></app-twee -->->
+<!-- <router-outlet></router-outlet> -->
 
