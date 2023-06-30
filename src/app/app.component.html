@@ -44,10 +44,10 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
                       <div class="">
                           <div class="flex flex-row gap-[11px]">
                               <div class="w-[50px] h-[50px]">
-                                  <img class="rounded-full" src={{selectedTweet().image}} alt="">
+                                  <img class="rounded-full" src={{selectedTweet().profilePic}} alt="">
                               </div>
                               <div class="">
-                                  <p class="text-[15px] font-semibold"> {{selectedTweet().userName}}</p>
+                                  <p class="text-[15px] font-semibold"> {{selectedTweet().username}}</p>
                                   <p class="text-[13px] text-zinc-500">{{selectedTweet().text}}</p>
                               </div>
                           </div>
@@ -72,10 +72,10 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
                       <div class="">
                           <div class="flex flex-row gap-[11px]">
                               <div class="w-[50px] h-[47px]">
-                                  <img class="rounded-full" src={{item.image}} alt="">
+                                  <img class="rounded-full" src={{item.profilePic}} alt="">
                               </div>
                               <div class="">
-                                  <p class="text-[15px] font-semibold">{{item.userName}}</p>
+                                  <p class="text-[15px] font-semibold">{{item.username}}</p>
                           </div>
                       </div>
                       <div class="w-[24px] h-[19px]">
@@ -138,11 +138,13 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
 
                         <div class="flex flex-row gap-[11px]">
                             <div class="w-[50px] h-[50px]">
-                                <img class="rounded-full" src="../assets/img/no-img.png" alt="">
+                                
+                                  <!-- <img class="rounded-full" src={{selectedTweet().profilePic}} alt="">  -->
+                                <img class="rounded-full"  src="../assets/images/no-img.png" alt=""> 
                             </div>
                             <div class="">
-                                <p class="text-[15px] font-semibold">Friendly bob</p>
-                                <p class="text-[13px] text-zinc-500">@friendly-bob</p>
+                                <p class="text-[15px] font-semibold">{{selectedTweet().name}}</p>
+                                <p class="text-[13px] text-zinc-500">{{selectedTweet().username}}</p>
                             </div>
                         </div>
 
@@ -153,13 +155,7 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
                     </div>
                     <div class="pt-[33px]">
                         <p class="text-[21px] font-medium text-zinc-700 overflow-hidden line-clamp-3">
-                            Lorem ipsum
-                            dolor sit
-                            amet
-                            consectetur adipisicing elit. Asperiores reiciendis molestiae ullam doloribus repellat
-                            pariaturawf eafsdgg sgsdv sd sdvsdavdsv sdvsdv sdv sdVsd
-                            consectetur adipisicing elit. Asperiores reiciendis molestiae ullam doloribus repellat
-                            pariaturawf eafsdgg sgsdv sd sdvsdavdsv sdvsdv sdv sdVsd</p>
+                            {{selectedTweet().text}}</p>
                     </div>
 
 
@@ -173,18 +169,18 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
                 class="animate-ping absolute top-14 rounded-lg -z-10 left-36 inline-flex w-[340px] h-[150px] bg-white opacity-100"></span>
 
             <!-- card 2 -->
-            <div class="w-full grid grid-cols-3 rounded-2xl" id="card2">
+            <div class="w-full grid grid-cols-3 rounded-2xl" id="card2" >
                 <!-- card2 -->
-                <div class="w-[425px] h-[211px] bg-white rounded-xl  my-[16px] p-[16px] pb-4">
+                <div class="w-[425px] h-[211px] bg-white rounded-xl  my-[16px] p-[16px] pb-4" *ngFor="let item of list; index as i " >
                     <div class="flex flex-row justify-between">
                         <div class="">
                             <div class="flex flex-row gap-[11px]">
                                 <div class="w-[50px] h-[47px]">
-                                    <img class="rounded-full" src="../assets/img/no-img.png" alt="">
+                                    <img class="rounded-full"  src="../assets/images/no-img.png" alt=""> 
                                 </div>
                                 <div class="">
-                                    <p class="text-[15px] font-semibold">Friendly bob</p>
-                                    <p class="text-[13px] text-zinc-500">@friendly-bob</p>
+                                    <p class="text-[15px] font-semibold">{{item.name}}</p>
+                                    <p class="text-[13px] text-zinc-500">{{item.username}}</p>
                                 </div>
                             </div>
 
@@ -194,12 +190,7 @@ grid-template-rows: repeat(3, 170px);margin-top: 50px;">
                         </div>
                     </div>
                     <div class="pt-[23px]">
-                        <p class="text-[16px] font-medium text-zinc-700 line-clamp-3">Lorem ipsum dolor sit amet
-                            consectetur
-                            adipisicing
-                            elit. Asperiores reiciendis molestiae ullam doloribus
-                            repellat pariatur Asperiores reiciendis molestiae ullam doloribus
-                            repellat pariatur</p>
+                        <p class="text-[16px] font-medium text-zinc-700 line-clamp-3">{{item.text}}</p>
                     </div>
                 </div>
             </div>
