@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "bull": "^4.11.3",
+    "bullmq": "^4.8.0",
     "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
     "letter-count": "^5.2.1",

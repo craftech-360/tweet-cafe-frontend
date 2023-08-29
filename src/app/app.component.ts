@@ -97,43 +97,40 @@ export class AppComponent {
     //   // this.socket.emit('getTweets', this.latestDate)
     // });
 
-    this.socket.on("tweets", (data: []) => {
-
-
-      //delay= new DelayQueue(5000);
-      // console.log(e);
+    this.socket.on("tweetProcessed", (data: []) => {
+     
       if (data.length != 0) {
         this.list = [];
         console.log("data");
         console.log(data);
         this.list = data;
-        let tweet = this.list.map(tweet => moment(tweet.created_at));
-        this.latestDate = moment.max(tweet).format('YYYY-MM-DDTHH:mm:ssZ');
+        // let tweet = this.list.map(tweet => moment(tweet.createdAt));
+        // this.latestDate = moment.max(tweet).format('YYYY-MM-DDTHH:mm:ssZ');
         //this.latestDate = moment(this.latestDate).tz('Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ssZ');
         console.log("checking list");
-        let tmp = [...this.list];
-        console.log(tmp);
+        // let tmp = [...this.list];
+        // console.log(tmp);
         const delayQueue$ = createDelayQueue(data);
         delayQueue$.subscribe(
           (x) => {
             var i = this.list.indexOf(x);
             this.list.splice(i, 1);
             this.selectedTweet.set(x);
-            if (count(x.text)['chars'] < 60) {
-              console.log('less');
-              this.socket.emit("invalid", x._id)
-            }
-            else {
+            // if (count(x.text)['chars'] < 60) {
+              // console.log('less');
+              // this.socket.emit("invalid", x._id)
+            // }
+            // else {
               this.socket.emit("sendCommand", x._id)
-            }
-            console.log(x);
-            console.log("Hell");
+            // }
+            // console.log(x);
+            // console.log("Hell");
             // console.log(Delay ${ms} completed.);
           },
           null,
           () => {
             console.log('All data completed!');
-            this.socket.emit('getTweets', this.latestDate);
+            // this.socket.emit('getTweets', this.latestDate);
           }
         );
         // tmp.forEach(x => {
@@ -147,11 +144,12 @@ export class AppComponent {
         // delay.complete();
       }
       else {
-        console.log("hello");
-        this.latestDate = moment().subtract(45, 'seconds').format('YYYY-MM-DDTHH:mm:ssZ');
-        setTimeout(() => {
-          this.socket.emit('getTweets', this.latestDate);
-        }, 30000);
+        console.log("no-tweets");
+        return
+        // this.latestDate = moment().subtract(45, 'seconds').format('YYYY-MM-DDTHH:mm:ssZ');
+        // setTimeout(() => {
+        //   this.socket.emit('getTweets', this.latestDate);
+        // }, 30000);
       }
 
 
