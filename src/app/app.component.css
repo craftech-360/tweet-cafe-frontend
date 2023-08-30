@@ -1,4 +1,34 @@
+
 #main::-webkit-scrollbar {
     display: none;
+    
   }
 
+#card2::-webkit-scrollbar {
+  display: none;
+  
+}
+
+#card::-webkit-scrollbar {
+  display: none;
+  
+}
+#sub::-webkit-scrollbar {
+  display: none;
+  
+}
+
+#main{
+  background-image: url('../assets/images/bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.even-item {
+  background-color: white;
+}
+
+.odd-item {
+  background-color: #8ed2ff;
+}
